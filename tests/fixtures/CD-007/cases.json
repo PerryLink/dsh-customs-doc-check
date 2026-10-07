@@ -1,0 +1,21 @@
+{
+  "ruleId": "CD-007",
+  "pairs": [
+    {
+      "name": "expected-state",
+      "material": "CD-007-compliant.json",
+      "expect": {
+        "ruleId": "CD-007",
+        "count": 0
+      }
+    },
+    {
+      "name": "difference-present",
+      "material": "CD-007-unsafe.json",
+      "expect": {
+        "ruleId": "CD-007",
+        "count": 1
+      }
+    }
+  ]
+}
