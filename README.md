@@ -1,4 +1,25 @@
-# dsh-customs-doc-check
+# dsh-customs-doc-check — Customs declaration document register consistency check
+
+`dsh-customs-doc-check` reads one declaration supporting-document register — a 报关单证台账 whose own column names may be Chinese or English — and checks that register itself rather than the declaration behind it: that each row carries at least one of the goods name and the amount, that the commodity code is ten digits and the currency a three-letter code, that no document number is repeated, that gross weight is not below net weight, that a declaration date, where one is recorded, parses and is not later than the check date, and that no unreplaced template placeholder survives in the goods-name column.
+
+## What it answers
+
+| You ask | What it answers |
+|---|---|
+| One row's goods name still reads `待填` and its amount cell is empty — is anything reported? | Not by `CD-001`: it only asks that at least one of the goods name and the amount be filled, and `待填` is not blank. What reports the row is `CD-007`, which looks in the goods-name column for the placeholder terms the pack lists (`【`, `{{`, `XXX`, `待填`, `TBD` and the like). `CD-001` never judges whether the declared content is truthful; `CD-007` only looks for those terms in that one column, and its term list can be adjusted to your own template. |
+| The commodity code is written `84713000` — eight digits. Is that reported? | Yes. `CD-002` matches the cell against ten digits and reports anything else. It checks the digit count and the legality of the characters only, never whether the code is the right one: the same goods may legitimately carry different codes under different classification decisions. The digit count is the rule's `pattern` parameter, so it can be changed when the tariff changes its digit count. |
+| The currency column reads `RMB` in one row and `usd` in another — which row is reported? | `usd`: `CD-003` accepts three upper-case letters. `RMB` fits that shape and passes, because the rule is a shape check and not the wording of the clause — the code table the clause points to was not obtained, and the rule deliberately takes no position on the `CNY` versus `RMB` spelling that customs practice also uses; tighten the `pattern` if your house style fixes one. It does not judge whether the currency chosen is the right one for the settlement. |
+| The same document number appears in two rows — what does the check say? | `CD-004` reports the repeated number; whitespace is ignored when comparing. Uniqueness is all the rule establishes: a hit usually means the same document was registered twice or a number was copied from another document, and which of the two is wrong is for a person to confirm. It does not decide which registration is the valid one. |
+| Gross weight reads `1,180` and net weight `1,250` — is that caught? And what if a row has no net weight? | The first is reported: `CD-005` compares the two values and reports a row where gross weight is below net weight. Only the numbers are compared and units are allowed (`12.5KGS`), and the rule never judges whether the declared weight is truthful. A row missing either field is not compared at all; where that leaves nothing to compare, the rule lands in `skipped` with its reason instead of reporting a difference. |
+| The register carries no declaration date at all, and one row's date is `2026-13-40`. What is reported? | The impossible date is reported: `CD-006` requires the date to parse and not to be later than the check date. A missing declaration date is not reported as a defect — at declaration time that column is 免予填报, being recorded by the customs computer system rather than by the declarant, so the rule only checks a date that is there. A date that cannot be parsed is reported on its own and never silently skipped, and the rule does not judge whether the declaration was made within a statutory time limit. |
+
+## Standards it follows
+
+| Document | Number | Cited by rules |
+|---|---|---|
+| 《中华人民共和国海关进出口货物报关单填制规范》 | 海关总署公告 2019 年第 18 号（本次未取得条文） | CD-001, CD-002, CD-005, CD-007 |
+| 《表示货币的代码》 | GB/T 12406—2022（表示货币的代码；2022-12-30 发布并实施；全部代替 GB/T 12406—2008（该版名称为「表示货币和资金的代码」）——注意旧版名称含"资金"；修改采用 ISO 4217:2015，非等同采用；条号本次未取得） | CD-003 |
+| 《中华人民共和国海关进出口货物申报管理规定》 | 海关总署令（现行令号本次未核实） | CD-004, CD-006 |
 
 **Boundary:** this plugin checks a **报关单证台账** for what a register can be held to mechanically — that
 the key columns are filled, that the commodity code and currency follow their formats, that document

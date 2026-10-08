@@ -1,4 +1,25 @@
-# dsh-customs-doc-check
+# dsh-customs-doc-check — Verificação da coerência do registo de documentos de declaração aduaneira
+
+`dsh-customs-doc-check` lê um registo de documentos de declaração (报关单证台账) —cujos nomes de coluna podem estar em chinês ou em inglês— e verifica esse registo em si mesmo, não a declaração por trás dele: que cada linha traga pelo menos um dos dois, o nome da mercadoria ou o montante total; que o código da mercadoria tenha dez dígitos e a moeda seja um código de três letras; que não se repita nenhum número de documento; que o peso bruto não seja inferior ao peso líquido; que a data de declaração, quando registada, seja analisável e não seja posterior à data de verificação; e que não reste nenhum marcador de modelo por substituir na coluna do nome da mercadoria.
+
+## O que ele responde
+
+| Você pergunta | O que ele responde |
+|---|---|
+| Numa linha o nome da mercadoria ainda diz `待填` e a célula do montante está vazia — isso é reportado? | `CD-001` não: exige apenas que pelo menos um dos dois, o nome da mercadoria ou o montante total, esteja preenchido, e `待填` não está em branco. Quem reporta essa linha é `CD-007`, que procura na coluna do nome da mercadoria os marcadores de modelo que o pacote lista (`【`, `{{`, `XXX`, `待填`, `TBD` e afins). `CD-001` não julga se o conteúdo declarado é verdadeiro; `CD-007` procura apenas esses termos nessa coluna, e a sua lista de termos pode ser ajustada ao modelo da sua instituição. |
+| O código da mercadoria está escrito `84713000`, com oito dígitos — isso é reportado? | Sim. `CD-002` compara a célula com dez dígitos e reporta qualquer outro caso. Verifica apenas o número de dígitos e a legalidade dos caracteres, nunca se o código é o correto: a mesma mercadoria pode legitimamente ter códigos diferentes sob decisões de classificação diferentes. O número de dígitos é o parâmetro `pattern` da regra, alterável quando a pauta aduaneira mudar o seu número de dígitos. |
+| A coluna da moeda diz `RMB` numa linha e `usd` noutra — qual das linhas é reportada? | `usd`: `CD-003` aceita apenas três letras maiúsculas. `RMB` encaixa nessa forma e passa, porque a regra é uma verificação de forma e não a redação do artigo — a tabela de códigos para a qual o artigo remete não foi obtida, e a regra não toma posição entre as grafias `CNY` e `RMB` que a prática aduaneira também usa; restrinja o `pattern` se a sua instituição fixar uma só. Não julga se a moeda escolhida é a correta para a liquidação. |
+| O mesmo número de documento aparece em duas linhas — o que diz a verificação? | `CD-004` reporta o número repetido; na comparação os espaços são ignorados. A unicidade é tudo o que a regra estabelece: um resultado costuma significar que o mesmo documento foi registado duas vezes ou que um número foi copiado de outro documento, e qual dos dois está errado cabe a uma pessoa confirmar. Não decide qual registo é o válido. |
+| O peso bruto está `1,180` e o líquido `1,250` — isso é detetado? E se uma linha não tiver peso líquido? | O primeiro é reportado: `CD-005` compara os dois valores e reporta a linha em que o peso bruto é inferior ao líquido. Só os números são comparados e aceitam-se unidades (`12.5KGS`), e a regra nunca julga se o peso declarado é verdadeiro. Uma linha à qual falte um dos dois campos não é comparada de todo; se isso não deixar nada a comparar, a regra entra em `skipped` com o seu motivo em vez de ser reportada como diferença. |
+| O registo não traz data de declaração nenhuma e uma linha tem `2026-13-40` — o que é reportado? | A data impossível é reportada: `CD-006` exige que a data seja analisável e não posterior à data de verificação. A falta da data de declaração não é reportada como defeito — no momento da declaração essa coluna é 免予填报, sendo registada pelo sistema informático aduaneiro e não pelo declarante, pelo que a regra só verifica a data quando ela consta. Uma data que não se consegue analisar é reportada à parte e nunca é omitida em silêncio, e a regra não julga se a declaração foi feita dentro de um prazo legal. |
+
+## Normas que segue
+
+| Documento | Número | Regras que o citam |
+|---|---|---|
+| 《中华人民共和国海关进出口货物报关单填制规范》 | 海关总署公告 2019 年第 18 号（本次未取得条文） | CD-001, CD-002, CD-005, CD-007 |
+| 《表示货币的代码》 | GB/T 12406—2022（表示货币的代码；2022-12-30 发布并实施；全部代替 GB/T 12406—2008（该版名称为「表示货币和资金的代码」）——注意旧版名称含"资金"；修改采用 ISO 4217:2015，非等同采用；条号本次未取得） | CD-003 |
+| 《中华人民共和国海关进出口货物申报管理规定》 | 海关总署令（现行令号本次未核实） | CD-004, CD-006 |
 
 **Boundary:** this plugin checks a **报关单证台账** for what a register can be held to mechanically — that
 the key columns are filled, that the commodity code and currency follow their formats, that document
