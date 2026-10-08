@@ -54,8 +54,7 @@ classification decisions. **This plugin never judges classification.**
 ## Install
 
 ```sh
-pnpm pack
-dsh plugin --profile <name> add ./*.tgz
+dsh plugin --profile <name> add dsh-customs-doc-check
 dsh --profile <name> --dump-config | grep 'dsh-customs-doc-check'
 ```
 
