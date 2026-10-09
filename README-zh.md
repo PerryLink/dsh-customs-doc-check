@@ -1,6 +1,14 @@
 # dsh-customs-doc-check — 报关单证一致性核对
 
+[![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+
 `dsh-customs-doc-check` 读取一份报关单证台账——栏名可以是中文或英文——核对这份台账自身，而不是它背后的申报：每行是否至少填写了品名与总价中的一项、商品编号是否为十位数字、币制是否为三位字母代码、单证编号是否重复、毛重是否不小于净重、已填写的申报日期是否可解析且不晚于核对日、品名栏是否残留未替换的模板占位符。
+
+## 实际输出长什么样
+
+![Terminal demo of dsh-customs-doc-check: real output over its CD-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-customs-doc-check/main/docs/assets/dsh-customs-doc-check-demo.png)
+
+本插件对自己 `CD-001` 测试夹具的**真实输出**，不是示意图。规则库不伪造引文，因此每条发现都会同时写明所引条款，以及该条款原文本次未取得。
 
 ## 它回答什么问题
 

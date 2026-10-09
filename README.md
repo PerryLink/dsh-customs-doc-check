@@ -1,6 +1,14 @@
 # dsh-customs-doc-check — Customs declaration document register consistency check
 
+[![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+
 `dsh-customs-doc-check` reads one declaration supporting-document register — a 报关单证台账 whose own column names may be Chinese or English — and checks that register itself rather than the declaration behind it: that each row carries at least one of the goods name and the amount, that the commodity code is ten digits and the currency a three-letter code, that no document number is repeated, that gross weight is not below net weight, that a declaration date, where one is recorded, parses and is not later than the check date, and that no unreplaced template placeholder survives in the goods-name column.
+
+## What it looks like
+
+![Terminal demo of dsh-customs-doc-check: real output over its CD-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-customs-doc-check/main/docs/assets/dsh-customs-doc-check-demo.png)
+
+Real output from this plugin over its own `CD-001` test fixture — not a mock-up. The rule pack ships no invented quotations, so a finding names both the clause it applied and the fact that the clause text was not obtained.
 
 ## What it answers
 
