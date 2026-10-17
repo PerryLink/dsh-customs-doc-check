@@ -4,6 +4,13 @@
 
 `dsh-customs-doc-check` एक घोषणा-संबंधी दस्तावेज़ रजिस्टर (报关单证台账) पढ़ता है — जिसके स्तंभ-नाम चीनी या अंग्रेज़ी में हो सकते हैं — और उसी रजिस्टर की जाँच करता है, उसके पीछे की घोषणा की नहीं: कि हर पंक्ति में माल का नाम या कुल राशि में से कम से कम एक भरा हो, कि माल-कोड दस अंकों का हो और मुद्रा तीन अक्षरों का कोड हो, कि कोई दस्तावेज़-क्रमांक दोहराया न गया हो, कि सकल भार निवल भार से कम न हो, कि दर्ज घोषणा-तिथि पढ़ी जा सके और जाँच-तिथि से बाद की न हो, और कि माल-नाम के स्तंभ में कोई अपरिवर्तित टेम्पलेट प्लेसहोल्डर शेष न रहे।
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-customs-doc-check
+dsh --profile <name> --dump-config | grep 'dsh-customs-doc-check'
+```
+
 ## आउटपुट कैसा दिखता है
 
 ![Terminal demo of dsh-customs-doc-check: real output over its CD-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-customs-doc-check/main/docs/assets/dsh-customs-doc-check-hero.png)
@@ -81,13 +88,6 @@ classification decisions. **This plugin never judges classification.**
 ## What it does
 
 नियम-सूची, फ़ील्ड और विस्तृत व्यवहार [README.md](README.md#what-it-does) (अंग्रेज़ी मुख्य संस्करण) में हैं। यह प्लगइन केवल उद्धृत धाराओं के सामने शाब्दिक अंतर सूचीबद्ध करता है और हर न चल पाई जाँच को `skipped` में बताता है।
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-customs-doc-check
-dsh --profile <name> --dump-config | grep 'dsh-customs-doc-check'
-```
 
 ## Configuration
 

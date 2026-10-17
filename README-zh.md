@@ -4,6 +4,13 @@
 
 `dsh-customs-doc-check` 读取一份报关单证台账——栏名可以是中文或英文——核对这份台账自身，而不是它背后的申报：每行是否至少填写了品名与总价中的一项、商品编号是否为十位数字、币制是否为三位字母代码、单证编号是否重复、毛重是否不小于净重、已填写的申报日期是否可解析且不晚于核对日、品名栏是否残留未替换的模板占位符。
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-customs-doc-check
+dsh --profile <name> --dump-config | grep 'dsh-customs-doc-check'
+```
+
 ## 实际输出长什么样
 
 ![Terminal demo of dsh-customs-doc-check: real output over its CD-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-customs-doc-check/main/docs/assets/dsh-customs-doc-check-hero.png)
@@ -81,13 +88,6 @@ classification decisions. **This plugin never judges classification.**
 ## What it does
 
 规则表、字段说明与行为细节见 [README.md](README.md#what-it-does)（英文主版本）。本插件只列出材料与所引条款之间的字面差异，并对无法执行的检查在 `skipped` 中逐项说明。
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-customs-doc-check
-dsh --profile <name> --dump-config | grep 'dsh-customs-doc-check'
-```
 
 ## Configuration
 

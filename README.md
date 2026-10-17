@@ -4,6 +4,13 @@
 
 `dsh-customs-doc-check` reads one declaration supporting-document register — a 报关单证台账 whose own column names may be Chinese or English — and checks that register itself rather than the declaration behind it: that each row carries at least one of the goods name and the amount, that the commodity code is ten digits and the currency a three-letter code, that no document number is repeated, that gross weight is not below net weight, that a declaration date, where one is recorded, parses and is not later than the check date, and that no unreplaced template placeholder survives in the goods-name column.
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-customs-doc-check
+dsh --profile <name> --dump-config | grep 'dsh-customs-doc-check'
+```
+
 ## What it looks like
 
 ![Terminal demo of dsh-customs-doc-check: real output over its CD-001 fixture](https://raw.githubusercontent.com/PerryLink/dsh-customs-doc-check/main/docs/assets/dsh-customs-doc-check-hero.png)
@@ -92,13 +99,6 @@ in Chinese or English — applies a versioned rule pack, and returns a report.
 | `CD-005` | gross weight is not below net weight | warn | principle |
 | `CD-006` | the declaration date parses and is not in the future | warn | principle |
 | `CD-007` | the goods name holds no unreplaced placeholder | warn | principle |
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-customs-doc-check
-dsh --profile <name> --dump-config | grep 'dsh-customs-doc-check'
-```
 
 ## Configuration
 
