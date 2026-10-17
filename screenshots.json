@@ -1,0 +1,14 @@
+[
+  {
+    "path": "docs/assets/dsh-customs-doc-check-hero.png",
+    "kind": "hero",
+    "alt": "dsh-customs-doc-check terminal output",
+    "caption": "Real dsh-customs-doc-check checker output; 31 tests passed."
+  },
+  {
+    "path": "docs/assets/dsh-customs-doc-check-demo.gif",
+    "kind": "demo",
+    "alt": "Animated dsh-customs-doc-check terminal session",
+    "caption": "The same run, assembled line by line."
+  }
+]
