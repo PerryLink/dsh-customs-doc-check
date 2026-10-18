@@ -42,35 +42,30 @@ dsh --profile <name> --dump-config | grep 'dsh-customs-doc-check'
 
 **边界（中文译文，以英文原文为准）：** 本插件核对一份**报关单证台账**，范围限于登记表可以机械判定的事项——关键栏目是否填写，商品编码与币制是否符合各自的形式，单证编号是否唯一，毛重是否不低于净重，日期是否可解析，以及是否残留模板占位符。它**不**判定申报是否真实、是否构成申报不实、是否影响税款，也不判定货物是否应当查验或处罚。**这些判断属于海关**；同一批货物在不同的归类决定下可以正当地对应不同的编码。**本插件从不判定归类。**
 
-> ### ⚠️ What the citations rest on
+> ### ⚠️ 这些引文的依据（以英文原文为准）
 >
-> **《中华人民共和国海关进出口货物报关单填制规范》was obtained in full and read article by article** (49 articles
-> plus the closing definitions), and `rules/evidence/clause-verification.md` records what was quoted: article 34
-> (the commodity code is **10 digits**), articles 5 and 6 (dates are **8 digits**, year-month-day, and — worth
-> knowing — the declaration date is 「**在申报时免予填报**」, so a register lacking it is normal), article 39
-> (currency is taken from the 《货币代码表》), articles 24–26 (packages, gross and net weight) and article 38.
-> The **issuing facts were confirmed against the official announcement**: 《海关总署公告 2019 年第 18 号》,
-> dated 2019-01-22, **in force from 2019-02-01, and it repealed 海关总署 2018 年第 60 号公告**, so citing that one
-> is simply wrong. 《进（出）境货物备案清单》 is filled **比照** this specification.
+> **《中华人民共和国海关进出口货物报关单填制规范》已完整取得并逐条阅读**（49 条正文加结尾定义），
+> `rules/evidence/clause-verification.md` 记录了所引内容：第34条（商品编码为**10 位数字**）、
+> 第5条与第6条（日期为**8 位数字**，年-月-日；而且——值得知道——申报日期「**在申报时免予填报**」，
+> 因此台账缺少该日期是正常的）、第39条（币制取自《货币代码表》）、第24–26条（件数、毛重与净重）
+> 以及第38条。**发布事实已对照官方公告确认**：《海关总署公告 2019 年第 18 号》，日期为 2019-01-22，
+> **自 2019-02-01 起施行，并废止了海关总署 2018 年第 60 号公告**，因此援引后者完全是错误的。
+> 《进（出）境货物备案清单》**比照**本规范填制。
 >
-> **Two claims were corrected as a result.** `CD-003` said currency "should be three letters" — the article says
-> only 「按海关规定的《货币代码表》选择相应的货币名称及代码填报」, and that code table **was not obtained**, so
-> three letters is an inference about the table's shape, not the article's wording. And `CD-006` now states the
-> exemption above rather than implying a missing declaration date is a defect.
+> **因此更正了两处主张。** `CD-003` 曾说币制“应为三个字母”——该条只说「按海关规定的《货币代码表》
+> 选择相应的货币名称及代码填报」，而该代码表**本次未取得**，所以“三个字母”只是对该表形态的推断，
+> 而不是条文措辞。`CD-006` 现在改为写明上述豁免，而不是暗示缺少申报日期就是缺陷。
 >
-> **Every `excerpt` still says "本次未取得" and every rule stays `warn` or `info`** — deliberately. The
-> specification governs **how the declaration form's columns are filled in**, while this plugin checks an
-> enterprise's **supporting-document register**. A register is not a declaration form, so raising a rule to
-> `direct` would dress a register gap up as a customs obligation. **《申报管理规定》and the various code tables
-> (关区、运输方式、监管方式、货币、国别、港口 etc.) were all unobtained**, which is exactly why no code table is
-> built in. The specification text itself was read from a **local trade-promotion council's reprint**, because the
-> official attachment is a `.doc` and this tool cannot decode binary Office files.
+> **每一条 `excerpt` 仍写着“本次未取得”，每条规则也仍为 `warn` 或 `info`**——这是有意为之。
+> 该规范规定的是**报关单各栏如何填制**，而本插件核对的是企业的**随附单证台账**。台账不是报关单，
+> 因此把规则提升为 `direct` 会把台账缺口包装成海关义务。**《申报管理规定》以及各类代码表（关区、
+> 运输方式、监管方式、货币、国别、港口等）均未取得**，这正是没有内置任何代码表的原因。规范正文
+> 本身是从**当地贸促会的转载**读取的，因为官方附件是 `.doc` 文件，而本工具无法解码二进制 Office
+> 文件。
 >
-> Two checks deserve a note of their own. The commodity-code check verifies **ten digits and nothing
-> else** — the digit count comes from the current tariff, and the check never says whether a code is the
-> *right* code. The currency check verifies **three upper-case letters**, and deliberately takes no
-> position on `CNY` versus the `RMB` spelling that Customs practice also uses; narrow the pattern if your
-> house style is one of them.
+> 有两项检查值得单独说明。商品编码检查只核对**十位数字，别的什么都不核对**——位数来自现行税则，
+> 该检查从不判断编码是否为*正确*的编码。币制检查核对**三个大写字母**，并刻意不对 `CNY` 与海关
+> 实务同样使用的 `RMB` 拼法采取立场；如果你的机构风格只用其中一种，请收窄该模式。
 
 ## Compatibility
 
