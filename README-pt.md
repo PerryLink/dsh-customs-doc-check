@@ -1,5 +1,7 @@
 # dsh-customs-doc-check — Verificação da coerência do registo de documentos de declaração aduaneira
 
+[English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
+
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
 
 `dsh-customs-doc-check` lê um registo de documentos de declaração (报关单证台账) —cujos nomes de coluna podem estar em chinês ou em inglês— e verifica esse registo em si mesmo, não a declaração por trás dele: que cada linha traga pelo menos um dos dois, o nome da mercadoria ou o montante total; que o código da mercadoria tenha dez dígitos e a moeda seja um código de três letras; que não se repita nenhum número de documento; que o peso bruto não seja inferior ao peso líquido; que a data de declaração, quando registada, seja analisável e não seja posterior à data de verificação; e que não reste nenhum marcador de modelo por substituir na coluna do nome da mercadoria.
