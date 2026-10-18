@@ -40,13 +40,7 @@ dsh --profile <name> --dump-config | grep 'dsh-customs-doc-check'
 | 《表示货币的代码》 | GB/T 12406—2022（表示货币的代码；2022-12-30 发布并实施；全部代替 GB/T 12406—2008（该版名称为「表示货币和资金的代码」）——注意旧版名称含"资金"；修改采用 ISO 4217:2015，非等同采用；条号本次未取得） | CD-003 |
 | 《中华人民共和国海关进出口货物申报管理规定》 | 海关总署令（现行令号本次未核实） | CD-004, CD-006 |
 
-**Boundary:** this plugin checks a **报关单证台账** for what a register can be held to mechanically — that
-the key columns are filled, that the commodity code and currency follow their formats, that document
-numbers are unique, that gross weight is not below net weight, that dates parse, and that no template
-placeholder survives. It does **not** decide whether a declaration is truthful, whether it amounts to
-misdeclaration, whether it affects duty, or whether goods should be inspected or penalised. **Those calls
-belong to Customs**, and the same goods may legitimately carry different codes under different
-classification decisions. **This plugin never judges classification.**
+**边界（中文译文，以英文原文为准）：** 本插件核对一份**报关单证台账**，范围限于登记表可以机械判定的事项——关键栏目是否填写，商品编码与币制是否符合各自的形式，单证编号是否唯一，毛重是否不低于净重，日期是否可解析，以及是否残留模板占位符。它**不**判定申报是否真实、是否构成申报不实、是否影响税款，也不判定货物是否应当查验或处罚。**这些判断属于海关**；同一批货物在不同的归类决定下可以正当地对应不同的编码。**本插件从不判定归类。**
 
 > ### ⚠️ What the citations rest on
 >
