@@ -3,6 +3,7 @@
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+[![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-customs-doc-check?metric=downloads)](https://dshfind.com/en/plugins/PerryLink/dsh-customs-doc-check?ref=badge)
 
 `dsh-customs-doc-check` एक घोषणा-संबंधी दस्तावेज़ रजिस्टर (报关单证台账) पढ़ता है — जिसके स्तंभ-नाम चीनी या अंग्रेज़ी में हो सकते हैं — और उसी रजिस्टर की जाँच करता है, उसके पीछे की घोषणा की नहीं: कि हर पंक्ति में माल का नाम या कुल राशि में से कम से कम एक भरा हो, कि माल-कोड दस अंकों का हो और मुद्रा तीन अक्षरों का कोड हो, कि कोई दस्तावेज़-क्रमांक दोहराया न गया हो, कि सकल भार निवल भार से कम न हो, कि दर्ज घोषणा-तिथि पढ़ी जा सके और जाँच-तिथि से बाद की न हो, और कि माल-नाम के स्तंभ में कोई अपरिवर्तित टेम्पलेट प्लेसहोल्डर शेष न रहे।
 
