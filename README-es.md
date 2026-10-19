@@ -30,6 +30,35 @@ Salida real de este plugin sobre su propio fixture de prueba `CD-001` — no es 
 La tabla siguiente es el conjunto de ejemplos: la primera fila es el caso detallado y las demás son casos breves.
 
 
+#### Salida detallada
+
+**Herramienta** `customs_doc_check`
+
+**Entrada**
+
+~~~json
+{"rows":[{"单证种类":"发票","商品名称":"","总价":"", ...}]}
+~~~
+ 
+**Salida**
+
+~~~json
+{
+  "id": "dsh-customs-doc-check.CD-001.de09b5a6",
+  "ruleId": "CD-001",
+  "severity": "warn",
+  "locator": {
+    "row": 1,
+    "field": "goodsName"
+  },
+  "found": "第 1 行 goodsName、amount 都为空",
+  "expected": "goodsName、amount 至少应填写一项",
+  "fix": "补填品名与总价；本条只核对是否填写，不判断申报内容是否真实"
+}
+~~~
+
+*Observado en `dsh-customs-doc-check/tests/fixtures/CD-001/CD-001-unsafe.json; dsh-customs-doc-check/tests/fixtures/CD-001/cases.json; dsh-customs-doc-check/rules/customs-doc-check.yaml; dsh-customs-doc-check/tests/index.test.ts`*
+
 | Usted pregunta | Qué responde |
 |---|---|
 | En una fila el nombre de la mercancía todavía dice `待填` y la casilla del importe está vacía, ¿se informa de algo? | `CD-001` no: solo exige que se rellene al menos uno de los dos, el nombre de la mercancía o el importe total, y `待填` no está en blanco. La regla que informa de esa fila es `CD-007`, que busca en la columna del nombre de la mercancía los marcadores de plantilla que el paquete enumera (`【`, `{{`, `XXX`, `待填`, `TBD` y similares). `CD-001` no juzga si el contenido declarado es veraz; `CD-007` solo busca esos términos en esa columna, y su lista de términos puede ajustarse a la plantilla propia. |

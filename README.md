@@ -28,6 +28,35 @@ dsh --profile <name> --dump-config | grep 'dsh-customs-doc-check'
 
 The table below is the example set: the first row is the detailed walkthrough, the remaining rows are short cases.
 
+#### Detailed output
+
+**Tool** `customs_doc_check`
+
+**Input**
+
+~~~json
+{"rows":[{"单证种类":"发票","商品名称":"","总价":"", ...}]}
+~~~
+ 
+**Output**
+
+~~~json
+{
+  "id": "dsh-customs-doc-check.CD-001.de09b5a6",
+  "ruleId": "CD-001",
+  "severity": "warn",
+  "locator": {
+    "row": 1,
+    "field": "goodsName"
+  },
+  "found": "第 1 行 goodsName、amount 都为空",
+  "expected": "goodsName、amount 至少应填写一项",
+  "fix": "补填品名与总价；本条只核对是否填写，不判断申报内容是否真实"
+}
+~~~
+
+*Observed from `dsh-customs-doc-check/tests/fixtures/CD-001/CD-001-unsafe.json; dsh-customs-doc-check/tests/fixtures/CD-001/cases.json; dsh-customs-doc-check/rules/customs-doc-check.yaml; dsh-customs-doc-check/tests/index.test.ts`*
+
 | You ask | What it answers |
 |---|---|
 | One row's goods name still reads `待填` and its amount cell is empty — is anything reported? | Not by `CD-001`: it only asks that at least one of the goods name and the amount be filled, and `待填` is not blank. What reports the row is `CD-007`, which looks in the goods-name column for the placeholder terms the pack lists (`【`, `{{`, `XXX`, `待填`, `TBD` and the like). `CD-001` never judges whether the declared content is truthful; `CD-007` only looks for those terms in that one column, and its term list can be adjusted to your own template. |

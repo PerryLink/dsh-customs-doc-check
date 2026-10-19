@@ -30,6 +30,35 @@ Saída real deste plugin sobre o seu próprio fixture de teste `CD-001` — não
 A tabela abaixo é o conjunto de exemplos: a primeira linha é o caso detalhado e as demais são casos curtos.
 
 
+#### Saída detalhada
+
+**Ferramenta** `customs_doc_check`
+
+**Entrada**
+
+~~~json
+{"rows":[{"单证种类":"发票","商品名称":"","总价":"", ...}]}
+~~~
+ 
+**Saída**
+
+~~~json
+{
+  "id": "dsh-customs-doc-check.CD-001.de09b5a6",
+  "ruleId": "CD-001",
+  "severity": "warn",
+  "locator": {
+    "row": 1,
+    "field": "goodsName"
+  },
+  "found": "第 1 行 goodsName、amount 都为空",
+  "expected": "goodsName、amount 至少应填写一项",
+  "fix": "补填品名与总价；本条只核对是否填写，不判断申报内容是否真实"
+}
+~~~
+
+*Observado em `dsh-customs-doc-check/tests/fixtures/CD-001/CD-001-unsafe.json; dsh-customs-doc-check/tests/fixtures/CD-001/cases.json; dsh-customs-doc-check/rules/customs-doc-check.yaml; dsh-customs-doc-check/tests/index.test.ts`*
+
 | Você pergunta | O que ele responde |
 |---|---|
 | Numa linha o nome da mercadoria ainda diz `待填` e a célula do montante está vazia — isso é reportado? | `CD-001` não: exige apenas que pelo menos um dos dois, o nome da mercadoria ou o montante total, esteja preenchido, e `待填` não está em branco. Quem reporta essa linha é `CD-007`, que procura na coluna do nome da mercadoria os marcadores de modelo que o pacote lista (`【`, `{{`, `XXX`, `待填`, `TBD` e afins). `CD-001` não julga se o conteúdo declarado é verdadeiro; `CD-007` procura apenas esses termos nessa coluna, e a sua lista de termos pode ser ajustada ao modelo da sua instituição. |

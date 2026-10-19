@@ -30,6 +30,35 @@ dsh --profile <name> --dump-config | grep 'dsh-customs-doc-check'
 नीचे दी गई तालिका उदाहरण-समुच्चय है: पहली पंक्ति विस्तृत केस है, बाकी संक्षिप्त केस हैं।
 
 
+#### विस्तृत आउटपुट
+
+**उपकरण** `customs_doc_check`
+
+**इनपुट**
+
+~~~json
+{"rows":[{"单证种类":"发票","商品名称":"","总价":"", ...}]}
+~~~
+ 
+**आउटपुट**
+
+~~~json
+{
+  "id": "dsh-customs-doc-check.CD-001.de09b5a6",
+  "ruleId": "CD-001",
+  "severity": "warn",
+  "locator": {
+    "row": 1,
+    "field": "goodsName"
+  },
+  "found": "第 1 行 goodsName、amount 都为空",
+  "expected": "goodsName、amount 至少应填写一项",
+  "fix": "补填品名与总价；本条只核对是否填写，不判断申报内容是否真实"
+}
+~~~
+
+*स्रोत `dsh-customs-doc-check/tests/fixtures/CD-001/CD-001-unsafe.json; dsh-customs-doc-check/tests/fixtures/CD-001/cases.json; dsh-customs-doc-check/rules/customs-doc-check.yaml; dsh-customs-doc-check/tests/index.test.ts`*
+
 | आपका सवाल | इसका जवाब |
 |---|---|
 | एक पंक्ति में माल का नाम अब भी `待填` लिखा है और राशि का खाना खाली है — क्या कुछ दर्ज होता है? | `CD-001` नहीं: वह केवल यह अपेक्षा करता है कि माल का नाम या कुल राशि — इनमें से कम से कम एक भरा हो, और `待填` खाली नहीं है। उस पंक्ति को `CD-007` दर्ज करता है, जो माल-नाम के स्तंभ में पैक में सूचीबद्ध टेम्पलेट प्लेसहोल्डर (`【`, `{{`, `XXX`, `待填`, `TBD` आदि) खोजता है। `CD-001` यह नहीं आँकता कि घोषित विवरण सच है या नहीं; `CD-007` केवल उसी एक स्तंभ में इन शब्दों को खोजता है, और शब्द-सूची अपने टेम्पलेट के अनुसार बदली जा सकती है। |

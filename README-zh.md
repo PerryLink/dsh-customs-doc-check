@@ -30,6 +30,35 @@ dsh --profile <name> --dump-config | grep 'dsh-customs-doc-check'
 下表是示例集：第一行是详细走查，其余行是简短案例。
 
 
+#### 详细输出
+
+**工具** `customs_doc_check`
+
+**输入**
+
+~~~json
+{"rows":[{"单证种类":"发票","商品名称":"","总价":"", ...}]}
+~~~
+ 
+**输出**
+
+~~~json
+{
+  "id": "dsh-customs-doc-check.CD-001.de09b5a6",
+  "ruleId": "CD-001",
+  "severity": "warn",
+  "locator": {
+    "row": 1,
+    "field": "goodsName"
+  },
+  "found": "第 1 行 goodsName、amount 都为空",
+  "expected": "goodsName、amount 至少应填写一项",
+  "fix": "补填品名与总价；本条只核对是否填写，不判断申报内容是否真实"
+}
+~~~
+
+*来源 `dsh-customs-doc-check/tests/fixtures/CD-001/CD-001-unsafe.json; dsh-customs-doc-check/tests/fixtures/CD-001/cases.json; dsh-customs-doc-check/rules/customs-doc-check.yaml; dsh-customs-doc-check/tests/index.test.ts`*
+
 | 你会问 | 它怎么答 |
 |---|---|
 | 某行的品名还写着 `待填`，总价栏是空的——会被报出来吗？ | `CD-001` 不会报：它只要求品名与总价至少填写一项，而 `待填` 不是空白。报出这一行的是 `CD-007`，它在品名栏里查找规则库列出的占位符（`【`、`{{`、`XXX`、`待填`、`TBD` 等）。`CD-001` 不判断申报内容是否真实；`CD-007` 只在这一栏里找这些词，词表可按本机构模板调整。 |
