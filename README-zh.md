@@ -1,6 +1,6 @@
 # dsh-customs-doc-check — 报关单证一致性核对
 
-## 快速试跑（1 分钟）
+### 快速试跑（1 分钟）
 
 ```bash
 node samples/quickstart/run.mjs --check
