@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-customs-doc-check-flow-dark.svg">
-  <img src="docs/assets/dsh-customs-doc-check-flow-light.svg" width="100%" alt="dsh-customs-doc-check डेटा प्रवाह: rows[] घोषणा-पंजी → customs_doc_check उपकरण → rules/*.yaml नियम-पैक (CD-001..CD-007) → issues[] + skipped[] रिपोर्ट → समीक्षक का निर्णय; कॉन्फ़िगरेशन rulesFile / disabledRules / onlyRules / skipNotes / timeoutMs से आता है">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-customs-doc-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-customs-doc-check-hero-en-light.webp" width="100%" alt="dsh-customs-doc-check: बाईं ओर प्लगइन का नाम, दो मूल्य-पंक्तियाँ और यह टिप्पणी है कि स्तंभ-नाम चीनी या अंग्रेज़ी दोनों हो सकते हैं और केवल पंजी की जाँच होती है; दाईं ओर पंक्ति 1 खुली है — वे आठ स्तंभ जिन्हें नियम पढ़ते हैं, हर एक पर उसे पढ़ने वाले नियम का टैग (CD-004, CD-002, CD-001 + CD-007, CD-001, CD-003, CD-005, CD-006), goodsName और amount खाली, और नीचे CD-001 की warn प्राप्ति">
 </picture>
 
 # dsh-customs-doc-check
@@ -43,6 +43,11 @@ dsh plugin --profile <name> add dsh-customs-doc-check
 - **किसके लिए है**: सीमा-शुल्क घोषणाकर्ता, दस्तावेज़ लिपिक और विदेश-व्यापार अनुगामी; कमांड लाइन की ज़रूरत नहीं — सामग्री चैट में सौंप दें।
 - **आप क्या सौंपते हैं**: जाँच की मूल सामग्री (तालिका, पंजी या दस्तावेज़); मूल कभी नहीं बदला जाता। Excel को पहले JSON/YAML में बदला जा सकता है, प्लेटफ़ॉर्म समर्थित हो तो चैट में भी।
 - **आपको क्या मिलता है**: «कौन-सी पंक्ति, कौन-सा कॉलम, क्या कमी है, कैसे सुधारना है» की सूची; हर न चल पाई जाँच `skipped` में कारण के साथ दर्ज होती है।
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-customs-doc-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-customs-doc-check-flow-v5-light.svg" width="100%" alt="dsh-customs-doc-check की संरचना: JSON/YAML पंजी को 17 कैनोनिकल स्तंभों में सामान्यीकृत किया जाता है (उपनाम मिलान में केस, स्पेस, अंडरस्कोर और हाइफ़न नज़रअंदाज़ होते हैं, और कम से कम एक ज्ञात स्तंभ-नाम पहचानना ज़रूरी है), फिर सात नियम चलते हैं; हर नियम का एक ही निकास है — जो मिला वह issues[] में, जो नहीं चल सका वह अपने कारण के साथ skipped[] में, और जो नियम चला पर कुछ न मिला वह किसी में नहीं; दोनों चैनल एक ही रिपोर्ट में मिलते हैं (error 0 / warn 1 / info 0, issueCount 1 / skippedCount 0, markdown + reportJson) और निर्णय समीक्षक के पास रहता है: अनुपालन, वर्गीकरण, सत्यता या शुल्क पर कोई निर्णय नहीं">
+</picture>
 
 ## तीन चरणों में शुरुआत
 
@@ -321,7 +326,7 @@ node samples/quickstart/run.mjs --json
 # => {"tool":"customs_doc_check","issueCount":1,"summary":{"error":0,"warn":1,"info":0},"skippedCount":0}
 ```
 
-नमूना इनपुट `samples/quickstart/input/` में, अपेक्षित आउटपुट `samples/quickstart/expected/result.json` में और स्क्रीनशॉट `docs/assets/quickstart.png` में है। README की छवियाँ [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) से प्रोग्रामेटिक रूप से बनती हैं और दोबारा चलाई जा सकती हैं: `python scripts/gen-readme-assets.py`; पुराना एक-रूप फ़्लो डायग्राम और डेमो चित्र बाहरी लिंक के लिए `docs/assets/` में रहते हैं, जबकि README केवल नए हल्के/गहरे जोड़े का संदर्भ देते हैं।
+नमूना इनपुट `samples/quickstart/input/` में, अपेक्षित आउटपुट `samples/quickstart/expected/result.json` में और स्क्रीनशॉट `docs/assets/quickstart.png` में है। README की छवियाँ [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) से प्रोग्रामेटिक रूप से बनती हैं: hero बैनर Pillow से (zh / en × हल्का / गहरा, चार फ़ाइलें) और संरचना-चित्र हाथ से लिखे SVG के रूप में (हल्का और गहरा); दोबारा चलाई जा सकती हैं: `python scripts/gen-readme-assets.py`। पुराना एक-रूप फ़्लो डायग्राम, पुराना hero और डेमो चित्र बाहरी लिंक के लिए `docs/assets/` में रहते हैं, जबकि README केवल नए hero सेट और flow-v5 जोड़े का संदर्भ देते हैं।
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `cordis`, `customs`, `doc`
 

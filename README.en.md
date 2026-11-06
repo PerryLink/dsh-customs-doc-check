@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-customs-doc-check-flow-dark.svg">
-  <img src="docs/assets/dsh-customs-doc-check-flow-light.svg" width="100%" alt="dsh-customs-doc-check data flow: rows[] declaration register → customs_doc_check tool → rules/*.yaml rule pack (CD-001..CD-007) → issues[] + skipped[] report → reviewer verdict; config flows in via rulesFile / disabledRules / onlyRules / skipNotes / timeoutMs">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-customs-doc-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-customs-doc-check-hero-en-light.webp" width="100%" alt="dsh-customs-doc-check: the left column carries the plugin name, two value lines and the note that Chinese or English headers both work and only the register is checked; the right side opens up row 1 — the eight columns the rules read, each tagged with the rule that reads it (CD-004, CD-002, CD-001 + CD-007, CD-001, CD-003, CD-005, CD-006), goodsName and amount empty, and the CD-001 warn finding underneath">
 </picture>
 
 # dsh-customs-doc-check
@@ -43,6 +43,11 @@ It does not decide whether a declaration is truthful, whether it amounts to misd
 - **Who it is for**: customs declarants and trade document clerks; no command line required — hand the material over in chat.
 - **What you give it**: the source material the check works on (a table, register, or document); the original is never modified. Excel can be converted to JSON/YAML first, in chat if the platform supports it.
 - **What you get back**: a list of "which row, which column, what is missing, how to fix it"; every check that could not run is listed in `skipped` with its reason.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-customs-doc-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-customs-doc-check-flow-v5-light.svg" width="100%" alt="dsh-customs-doc-check structure: a JSON/YAML register is normalised into 17 canonical columns (alias matching ignores case, spaces, underscores and hyphens, and at least one known column name must be recognised) before seven rules run; each rule has exactly one exit — what it found goes to issues[], what could not run goes to skipped[] with its own reason, and a rule that ran and found nothing enters neither; both channels converge on one report (error 0 / warn 1 / info 0, issueCount 1 / skippedCount 0, markdown + reportJson) and the verdict stays with the reviewer: no compliance, classification, truthfulness or duty judgement">
+</picture>
 
 ## Three-step setup
 
@@ -341,7 +346,7 @@ node samples/quickstart/run.mjs --json
 # => {"tool":"customs_doc_check","issueCount":1,"summary":{"error":0,"warn":1,"info":0},"skippedCount":0}
 ```
 
-The sample input lives in `samples/quickstart/input/`, the expected output in `samples/quickstart/expected/result.json`, and a screenshot in `docs/assets/quickstart.png`. The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) and are safe to re-run: `python scripts/gen-readme-assets.py`; the older single-skin flow diagram and demo images stay in `docs/assets/` for external deep links, while the READMEs reference only the new light/dark pair.
+The sample input lives in `samples/quickstart/input/`, the expected output in `samples/quickstart/expected/result.json`, and a screenshot in `docs/assets/quickstart.png`. The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py): the hero banners with Pillow (zh / en × light / dark, four files) and the structure diagram as hand-written SVG (light and dark); safe to re-run: `python scripts/gen-readme-assets.py`. The older single-skin flow diagram, hero and demo images stay in `docs/assets/` for external deep links, while the READMEs reference only the new hero set and the flow-v5 pair.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `cordis`, `customs`, `doc`
 

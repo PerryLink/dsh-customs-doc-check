@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-customs-doc-check-flow-dark.svg">
-  <img src="docs/assets/dsh-customs-doc-check-flow-light.svg" width="100%" alt="Fluxo de dados do dsh-customs-doc-check: rows[] registo de documentos → ferramenta customs_doc_check → pacote de regras rules/*.yaml (CD-001..CD-007) → relatório issues[] + skipped[] → veredito do revisor; a configuração entra por rulesFile / disabledRules / onlyRules / skipNotes / timeoutMs">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-customs-doc-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-customs-doc-check-hero-en-light.webp" width="100%" alt="dsh-customs-doc-check: a coluna esquerda traz o nome do plugin, duas linhas de valor e a nota de que os cabeçalhos podem estar em chinês ou em inglês e só o registo é verificado; à direita abre-se a linha 1 — as oito colunas que as regras leem, cada uma marcada com a regra que a lê (CD-004, CD-002, CD-001 + CD-007, CD-001, CD-003, CD-005, CD-006), goodsName e amount vazios, e por baixo o achado warn de CD-001">
 </picture>
 
 # dsh-customs-doc-check
@@ -43,6 +43,11 @@ Não decide se a declaração é verdadeira, se constitui uma declaração inexa
 - **Para quem é**: declarantes aduaneiros, responsáveis de documentação comercial e agentes de comércio externo; não é preciso linha de comandos, basta entregar o material no chat.
 - **O que entrega**: o material de origem sobre o qual a verificação trabalha (uma tabela, um registo ou um documento); o original nunca é modificado. O Excel pode ser convertido antes para JSON/YAML, no próprio chat se a plataforma o permitir.
 - **O que recebe**: uma lista de «que linha, que coluna, o que falta, como corrigir»; cada verificação que não pôde ser executada aparece em `skipped` com o seu motivo.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-customs-doc-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-customs-doc-check-flow-v5-light.svg" width="100%" alt="Estrutura do dsh-customs-doc-check: um registo JSON/YAML é normalizado em 17 colunas canónicas (a correspondência de alias ignora maiúsculas, espaços, underscores e hífenes, e pelo menos um nome de coluna conhecido tem de ser reconhecido) antes de sete regras correrem; cada regra tem uma só saída — o que encontrou vai para issues[], o que não pôde correr vai para skipped[] com o seu motivo, e uma regra que correu sem achados não entra em nenhuma; os dois canais convergem num único relatório (error 0 / warn 1 / info 0, issueCount 1 / skippedCount 0, markdown + reportJson) e o veredito fica com o revisor: sem juízo de conformidade, classificação, veracidade ou direitos">
+</picture>
 
 ## Instalação em três passos
 
@@ -321,7 +326,7 @@ node samples/quickstart/run.mjs --json
 # => {"tool":"customs_doc_check","issueCount":1,"summary":{"error":0,"warn":1,"info":0},"skippedCount":0}
 ```
 
-A entrada da amostra está em `samples/quickstart/input/`, a saída esperada em `samples/quickstart/expected/result.json` e uma captura em `docs/assets/quickstart.png`. As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) e podem ser executadas novamente: `python scripts/gen-readme-assets.py`; o diagrama de fluxo de pele única e as imagens de demonstração antigas permanecem em `docs/assets/` para ligações externas, enquanto os README apenas referenciam o novo par claro/escuro.
+A entrada da amostra está em `samples/quickstart/input/`, a saída esperada em `samples/quickstart/expected/result.json` e uma captura em `docs/assets/quickstart.png`. As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py): as faixas hero com Pillow (zh / en × claro / escuro, quatro ficheiros) e o diagrama de estrutura como SVG escrito à mão (claro e escuro); podem ser executadas novamente: `python scripts/gen-readme-assets.py`. O diagrama de fluxo de pele única, o hero antigo e as imagens de demonstração permanecem em `docs/assets/` para ligações externas, enquanto os README apenas referenciam o novo conjunto de hero e o par flow-v5.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `cordis`, `customs`, `doc`
 

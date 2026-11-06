@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-customs-doc-check-flow-dark.svg">
-  <img src="docs/assets/dsh-customs-doc-check-flow-light.svg" width="100%" alt="dsh-customs-doc-check 数据流：rows[] 报关单证台账 → customs_doc_check 工具 → rules/*.yaml 规则包（CD-001..CD-007）→ issues[] + skipped[] 报告 → 审核人裁决；配置键：rulesFile、disabledRules、onlyRules、skipNotes、timeoutMs">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-customs-doc-check-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-customs-doc-check-hero-zh-light.webp" width="100%" alt="dsh-customs-doc-check 配图：左列是插件名、两行价值句与「栏名中英皆可；只核台账」的说明；右侧把台账第 1 行摊开——规则读到的 8 个栏目各自标着读它的规则号（CD-004、CD-002、CD-001 + CD-007、CD-001、CD-003、CD-005、CD-006），商品名称与总价两格为空，下方是 CD-001 的一条 warn 发现：第 1 行 goodsName、amount 都为空">
 </picture>
 
 # dsh-customs-doc-check
@@ -43,6 +43,11 @@ dsh plugin --profile <name> add dsh-customs-doc-check
 - **给谁用**：报关员、单证员、外贸跟单；不用懂命令行，在对话里把材料交给它即可。
 - **你交什么**：这项核对用到的原始材料（表格、清单或文书）；不改原件。Excel 可先转成 JSON/YAML，对话里也能代转。
 - **它交什么**：一份「哪一行、哪一栏、差什么、怎么补」的清单；没能执行的检查逐条列入 `skipped` 并写明原因。
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-customs-doc-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-customs-doc-check-flow-v5-light.svg" width="100%" alt="dsh-customs-doc-check 结构图：JSON/YAML 台账经 17 个规范栏目归一（别名匹配忽略大小写、空格、下划线、连字符，且至少要认得一个已知栏名）进入 7 条规则的规则包；每条规则只有一个出口——命中的进 issues[]，没能执行的进 skipped[] 并逐条写明原因，跑过而未命中的规则两栏都不进；两条通道汇入同一份报告（error 0 / warn 1 / info 0，issueCount 1 / skippedCount 0，markdown + reportJson），结论留给审核人：不判合规、不判归类、不判真实性、不判税款">
+</picture>
 
 ## 三步上手
 
@@ -336,7 +341,7 @@ node samples/quickstart/run.mjs --json
 # => {"tool":"customs_doc_check","issueCount":1,"summary":{"error":0,"warn":1,"info":0},"skippedCount":0}
 ```
 
-样例输入在 `samples/quickstart/input/`，期望输出在 `samples/quickstart/expected/result.json`，截图见 `docs/assets/quickstart.png`。README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python + Pillow），可重复执行：`python scripts/gen-readme-assets.py`；旧的单版流程图与演示图保留在 `docs/assets/` 供外链使用，README 只引用新生成的深浅双版。
+样例输入在 `samples/quickstart/input/`，期望输出在 `samples/quickstart/expected/result.json`，截图见 `docs/assets/quickstart.png`。README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成：hero 横幅用 Pillow（zh / en × 深浅共四张），结构图是手写 SVG（深浅双版）；可重复执行：`python scripts/gen-readme-assets.py`。旧的单版流程图、hero 与演示图保留在 `docs/assets/` 供外链使用，README 只引用新生成的四张 hero 与 flow-v5 双版。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `cordis`, `customs`, `doc`
 
