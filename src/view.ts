@@ -9,6 +9,7 @@
 import { canonicalJson } from './shared/report.ts'
 import { DISCLAIMER } from './shared/wording.ts'
 import type { Issue, Report, Severity } from './shared/report.ts'
+import type { IngestMeta } from './shared/ingest.ts'
 
 const SEVERITY_ORDER: readonly Severity[] = ['error', 'warn', 'info']
 
@@ -22,6 +23,10 @@ export interface ReportView {
   issueCount: number
   skippedCount: number
   execution?: Report['execution']
+  /** True when the extraction needs a human confirmation before rules run. */
+  needsConfirmation?: boolean
+  /** Extraction metadata, when the material came from a document. */
+  ingest?: IngestMeta
   markdown: string
   reportJson: string
 }
@@ -55,7 +60,7 @@ function issueLines(issues: readonly Issue[]): string[] {
  * @param report - canonical report value.
  * @returns the structured view consumed by `output.render` and by tests.
  */
-export function buildView(report: Report): ReportView {
+export function buildView(report: Report, ingest?: IngestMeta): ReportView {
   const lines: string[] = []
   lines.push(`# ${report.plugin} 检查结果`)
   lines.push('')
@@ -71,7 +76,22 @@ export function buildView(report: Report): ReportView {
         ` · 未实现 ${report.execution.unsupported}`,
     )
   }
+  if (ingest !== undefined) {
+    lines.push(`- 文档抽取：表 ${ingest.tableIndex + 1} · 表头行 ${ingest.headerRows.join('+')} · 置信度 ${ingest.confidence}`)
+  }
   lines.push('')
+  if (ingest !== undefined) {
+    lines.push('## 抽取结果')
+    lines.push('')
+    lines.push('以下为插件从文档中识别出的表；若表头或行列不对，请指定 tableIndex/headerRow 后重试。')
+    lines.push('')
+    lines.push(ingest.preview)
+    lines.push('')
+    if (ingest.warnings.length > 0) {
+      lines.push(`抽取警告：${ingest.warnings.join('；')}`)
+      lines.push('')
+    }
+  }
   lines.push('## 差异明细')
   lines.push('')
   if (report.issues.length === 0) {
@@ -103,7 +123,47 @@ export function buildView(report: Report): ReportView {
     issueCount: report.issues.length,
     skippedCount: report.skipped.length,
     ...(report.execution === undefined ? {} : { execution: report.execution }),
+    ...(ingest === undefined ? {} : { ingest }),
     markdown: lines.join('\n'),
     reportJson: canonicalJson(report),
+  }
+}
+
+
+/**
+ * Build a confirmation result for a low-confidence document extraction.
+ * No rule runs until the user confirms the table/header.
+ * @param target - document path.
+ * @param meta - extraction metadata and preview.
+ * @param candidates - candidate table ids when the extractor was ambiguous.
+ * @returns a view with `needsConfirmation: true`.
+ */
+export function buildConfirmationView(target: string, meta: IngestMeta, candidates: string[]): ReportView {
+  const lines: string[] = []
+  lines.push('# 需要确认文档抽取')
+  lines.push('')
+  lines.push(`- 检查对象：${target}`)
+  lines.push(`- 文档抽取：表 ${meta.tableIndex + 1} · 表头行 ${meta.headerRows.join('+')} · 置信度 ${meta.confidence}`)
+  if (candidates.length > 0) lines.push(`- 候选表：${candidates.join('、')}`)
+  lines.push('')
+  lines.push('抽取置信度较低，规则尚未运行。请先核对下表；确认无误后带 `confirm: true` 重试，或用 `tableIndex`/`headerRow` 指定正确的表和表头。')
+  lines.push('')
+  lines.push(meta.preview)
+  if (meta.warnings.length > 0) {
+    lines.push('')
+    lines.push(`抽取警告：${meta.warnings.join('；')}`)
+  }
+  return {
+    plugin: 'dsh-customs-doc-check',
+    target,
+    checkedAt: new Date().toISOString(),
+    rulesetVersion: '',
+    summary: { error: 0, warn: 0, info: 0 },
+    issueCount: 0,
+    skippedCount: 0,
+    needsConfirmation: true,
+    ingest: meta,
+    markdown: lines.join('\n'),
+    reportJson: '{}',
   }
 }

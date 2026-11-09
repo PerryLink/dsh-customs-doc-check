@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "tier": "L1+ingest",
+  "input_formats": ["json", "yaml", "csv", "xlsx", "xlsm", "docx"],
+  "outputs": ["markdown", "json"],
+  "rules": {
+    "total": 7,
+    "executed": 5,
+    "skipped": 2,
+    "manual": 0,
+    "unsupported": 0
+  },
+  "benchmark": {
+    "kind": "quickstart-sample",
+    "corpus_size": 1,
+    "note": "single-row CSV through dsh-table-ingest; header scalars are not preserved by CSV, so 2 rules skip; not a real-world P/R",
+    "measured_at": "2026-11-09"
+  },
+  "limits": [
+    "CSV 不携带报关单表头标量，相关规则会跳过；xlsx/docx 表头可由抽取层保留",
+    "只核对台账字段自洽，不做三单跨文档一致性；后者需要 job 包",
+    "不判定归类是否正确、不判定申报是否合规"
+  ]
+}
