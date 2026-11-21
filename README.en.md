@@ -130,6 +130,10 @@ Every PerryLink plugin is listed in the built-in DSH Desktop market: **Market â†
 
 ### Examples
 
+![dsh-customs-doc-check: real terminal run](docs/assets/dsh-customs-doc-check-demo.gif)
+
+*Animated replay of a real run recorded in this repository.*
+
 These are the plugin's real entry points; install once, then call one. The first row of the table below is the detailed walkthrough, the remaining rows are short cases.
 
 **Detailed example** â€” tool `customs_doc_check`, input:

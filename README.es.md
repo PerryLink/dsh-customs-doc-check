@@ -49,6 +49,11 @@ No decide si la declaración es veraz, si constituye una declaración inexacta, 
   <img src="docs/assets/dsh-customs-doc-check-flow-v5-light.svg" width="100%" alt="Estructura de dsh-customs-doc-check: un registro JSON/YAML se normaliza a 17 columnas canónicas (la coincidencia de alias ignora mayúsculas, espacios, guiones bajos y guiones, y debe reconocerse al menos un nombre de columna conocido) antes de ejecutar siete reglas; cada regla tiene una sola salida: lo encontrado va a issues[], lo que no pudo ejecutarse va a skipped[] con su motivo, y una regla que se ejecutó sin hallazgos no entra en ninguna; ambos canales confluyen en un único informe (error 0 / warn 1 / info 0, issueCount 1 / skippedCount 0, markdown + reportJson) y el veredicto queda en el revisor: no dicta cumplimiento, clasificación, veracidad ni derechos">
 </picture>
 
+![dsh-customs-doc-check: ejecución real de terminal](docs/assets/dsh-customs-doc-check-demo.gif)
+
+*Repetición animada de una ejecución real registrada en este repositorio.*
+
+
 ## Instalación en tres pasos
 
 1. **Instale** (elija un canal):

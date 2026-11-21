@@ -49,6 +49,11 @@ dsh plugin --profile <name> add dsh-customs-doc-check
   <img src="docs/assets/dsh-customs-doc-check-flow-v5-light.svg" width="100%" alt="dsh-customs-doc-check की संरचना: JSON/YAML पंजी को 17 कैनोनिकल स्तंभों में सामान्यीकृत किया जाता है (उपनाम मिलान में केस, स्पेस, अंडरस्कोर और हाइफ़न नज़रअंदाज़ होते हैं, और कम से कम एक ज्ञात स्तंभ-नाम पहचानना ज़रूरी है), फिर सात नियम चलते हैं; हर नियम का एक ही निकास है — जो मिला वह issues[] में, जो नहीं चल सका वह अपने कारण के साथ skipped[] में, और जो नियम चला पर कुछ न मिला वह किसी में नहीं; दोनों चैनल एक ही रिपोर्ट में मिलते हैं (error 0 / warn 1 / info 0, issueCount 1 / skippedCount 0, markdown + reportJson) और निर्णय समीक्षक के पास रहता है: अनुपालन, वर्गीकरण, सत्यता या शुल्क पर कोई निर्णय नहीं">
 </picture>
 
+![dsh-customs-doc-check का असली टर्मिनल रन](docs/assets/dsh-customs-doc-check-demo.gif)
+
+*इस रिपॉज़िटरी में दर्ज असली रन का एनिमेटेड रीप्ले।*
+
+
 ## तीन चरणों में शुरुआत
 
 1. **इंस्टॉल करें** (एक चैनल चुनें):
