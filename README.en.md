@@ -7,6 +7,8 @@
 
 # dsh-customs-doc-check
 
+Current version `0.2.13`.
+
 **Check a customs declaration register row by row — you get a list of which row, which column, and what to fix; the verdict stays with the reviewer.**
 
 A data-only checker plugin for DeepSeek Harness: it reads one customs declaration document register (column names may be Chinese or English), applies the versioned rule pack it ships (CD-001..CD-007), and lists only the differences it can point to inside the material — never a compliance verdict, never a liability finding.
