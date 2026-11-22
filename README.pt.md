@@ -11,6 +11,8 @@
 
 Um plugin verificador de dados para o DeepSeek Harness: lê um registo de documentos de declaração (os nomes das colunas podem estar em chinês ou em inglês), aplica o pacote de regras versionado que traz (CD-001..CD-007) e lista apenas as diferenças que consegue apontar dentro do material — nunca um veredito de conformidade, nunca uma conclusão de responsabilidade.
 
+Última verificação: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [Instalar](#instalação-em-três-passos) · [Configuração](#configuração) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -52,7 +54,6 @@ Não decide se a declaração é verdadeira, se constitui uma declaração inexa
 ![dsh-customs-doc-check: execução real de terminal](docs/assets/dsh-customs-doc-check-demo.gif)
 
 *Repetição animada de uma execução real registrada neste repositório.*
-
 
 ## Instalação em três passos
 

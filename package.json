@@ -1,6 +1,6 @@
 {
   "name": "dsh-customs-doc-check",
-  "version": "0.2.10",
+  "version": "0.2.12",
   "description": "报关单证一致性核对（按公开的报关单填制规范核对单证间字段一致性，仅提示差异，不作出定性结论）",
   "type": "module",
   "main": "lib/index.mjs",
@@ -89,12 +89,12 @@
   },
   "engines": {
     "node": "^22.19.0 || >=24.0.0",
-    "dsh": ">=0.2.1-0 <0.3.0"
+    "dsh": ">=0.2.1-0 <0.3.0 || >=0.2.3-0 <0.3.0-0"
   },
   "packageManager": "pnpm@11.7.0",
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.2",
-    "@deepseek-ai/dsh-tools": ">=0.1.2-rc.1 <0.2.0 || >=0.2.0-0 <0.3.0",
+    "@deepseek-ai/dsh-tools": ">=0.1.2-rc.1 <0.2.0 || >=0.2.0-0 <0.3.0 || >=0.2.3-0 <0.3.0-0",
     "@deepseek-ai/schemastery": "^3.18.2"
   },
   "devDependencies": {

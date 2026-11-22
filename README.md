@@ -11,6 +11,8 @@
 
 面向 DeepSeek Harness 的数据型核查插件：读取一份报关单证台账（栏名可以是中文或英文），按随包的版本化规则包（CD-001..CD-007）逐条核对，只列材料内部能逐条指认的差异，不判合规、不认定责任。
 
+最近一次核验：DeepSeek Harness `dsh-v0.2.3-alpha.1`（2026-11-22）。
+
 [安装](#三步上手) · [配置](#配置) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
